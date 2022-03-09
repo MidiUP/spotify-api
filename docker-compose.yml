@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  api-spotify:
+    container_name: api-spotify-container
+    build:
+      context: .
+      dockerfile: DockerFile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '3333:3333'

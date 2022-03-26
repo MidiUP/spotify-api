@@ -14,6 +14,13 @@ export const ok = (body: any): HttpResponse => {
   })
 }
 
+export const noContent = (): HttpResponse => {
+  return ({
+    statusCode: 204,
+    body: {}
+  })
+}
+
 export const serverError = (error: Error): HttpResponse => {
   return ({
     statusCode: 500,

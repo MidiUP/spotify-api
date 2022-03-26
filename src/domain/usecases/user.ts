@@ -3,3 +3,9 @@ export interface CreateUser{
   email: string,
   password: string
 }
+
+export interface UserDto{
+  id: number,
+  name: string,
+  email: string,
+}

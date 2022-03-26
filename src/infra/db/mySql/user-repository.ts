@@ -1,4 +1,4 @@
-import { CreateUser } from './../../../domain/usecases/user';
+import { CreateUser } from '../../../domain/usecases/user';
 import { sequelize } from '../../../data/sequelize'
 import User from '../../../domain/models/user'
 

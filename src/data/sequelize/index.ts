@@ -5,7 +5,7 @@ import path from 'path'
 export const sequelize = new Sequelize({
   database: process.env.DATABASE,
   dialect: 'mysql',
-  username: process.env.USERNAME,
+  username: 'root',
   password: process.env.PASSWORD,
   storage: ':memory:',
   models: [path.resolve(__dirname, '../', '../', 'domain', 'models')]

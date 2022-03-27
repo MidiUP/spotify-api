@@ -1,3 +1,4 @@
+import { Encrypter } from './../../../presentation/protocols/encrypter';
 import { IUserRepository } from '../../../infra/db/interfaces/user-repository'
 import { ok } from './../../../presentation/helpers/helpers-http';
 import { throwError } from '../../test-helpers/throw-error';
@@ -11,7 +12,8 @@ import { CreateUser, UserDto } from '../../../domain/usecases/user';
 interface sutTypes {
   sut: SignupController,
   validation: Validator,
-  repository: IUserRepository
+  repository: IUserRepository,
+  encrypter: Encrypter
 }
 
 const makeValidator = (): Validator => {
@@ -21,6 +23,19 @@ const makeValidator = (): Validator => {
     }
   }
   return new Validation()
+}
+
+const makeEncrypter= (): Encrypter => {
+  class Encrypt implements Encrypter {
+    compare(value: string, hash: string): Promise<boolean> {
+      throw new Error('Method not implemented.');
+    }
+    encrypt(value: string): Promise<string> {
+      return new Promise(resolve => resolve('hash'))
+    }
+    
+  }
+  return new Encrypt()
 }
 
 const makeRepository = (): IUserRepository => {
@@ -55,11 +70,13 @@ const makeRepository = (): IUserRepository => {
 const makeSut = (): sutTypes => {
   const validation = makeValidator()
   const repository = makeRepository()
-  const sut = new SignupController(validation, repository)
+  const encrypter = makeEncrypter() 
+  const sut = new SignupController(validation, repository, encrypter)
   return {
     sut,
     validation,
-    repository
+    repository,
+    encrypter
   }
 }
 
@@ -102,8 +119,22 @@ describe('signup controller', () => {
     expect(response).toEqual(serverError(new Error()))
   })
 
+  test('shold return 500 if encrypter throw error', async () => {
+    const { sut, encrypter } = makeSut()
+    jest.spyOn(encrypter, 'encrypt').mockImplementationOnce(throwError)
+    const response = await sut.handle(request)
+    expect(response).toEqual(serverError(new Error()))
+  })
+
+  test('shold call encrypt with correct param', async () => {
+    const { sut, encrypter } = makeSut()
+    const spyValidation = jest.spyOn(encrypter, 'encrypt')
+    await sut.handle(request)
+    expect(spyValidation).toHaveBeenCalledWith(request.body.password)
+  })
+
   test('shold return 200 user created', async () => {
-    const { sut, repository } = makeSut()
+    const { sut } = makeSut()
     const response = await sut.handle(request)
     expect(response).toEqual(ok({
       id: 0,

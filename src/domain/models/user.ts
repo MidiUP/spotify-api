@@ -1,11 +1,7 @@
-import { Model, Table, Column, PrimaryKey } from 'sequelize-typescript'
+import { Model, Table, Column } from 'sequelize-typescript'
 
-@Table({ tableName: 'user', timestamps: false})
+@Table({ tableName: 'user', timestamps: false })
 class User extends Model {
-  @Column
-  @PrimaryKey
-  id: number
-
   @Column
   name: string
 

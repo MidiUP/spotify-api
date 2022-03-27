@@ -4,5 +4,5 @@ import { IGenericRepository } from './repository-generic-interface'
 export interface IUserRepository extends IGenericRepository{
   get: () => Promise<UserDto[]>
   getById: (id: number) => Promise<UserDto>
-  post: (user: CreateUser) => Promise<any>
+  post: (user: CreateUser) => Promise<UserDto>
 }

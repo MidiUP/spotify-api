@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "dev": "nodemon src/main/server.ts",
-    "test": "jest --watch",
+    "test": "jest --passWithNoTests --watch",
+    "test:all": "jest --passWithNoTests --watchAll",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js"
   },

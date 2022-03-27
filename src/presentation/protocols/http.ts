@@ -1,9 +1,9 @@
 export interface HttpRequest{
-  header: any,
+  header: any
   body: any
 }
 
 export interface HttpResponse{
-  statusCode: number,
+  statusCode: number
   body: any
 }

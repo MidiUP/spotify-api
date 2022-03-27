@@ -1,8 +1,16 @@
-import { HttpResponse } from './../protocols/http';
+import { UnprocessableEntity } from './../errors/unprocessable-entity-error'
+import { HttpResponse } from './../protocols/http'
 
 export const badRequest = (error: Error): HttpResponse => {
   return ({
     statusCode: 400,
+    body: error
+  })
+}
+
+export const unprocessableEntity = (error: UnprocessableEntity): HttpResponse => {
+  return ({
+    statusCode: 422,
     body: error
   })
 }

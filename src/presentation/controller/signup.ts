@@ -1,6 +1,7 @@
+import { UnprocessableEntity } from './../errors/unprocessable-entity-error'
 import { Controller } from './../protocols/controller'
 import { Encrypter } from './../protocols/encrypter'
-import { ok } from './../helpers/helpers-http'
+import { ok, unprocessableEntity } from './../helpers/helpers-http'
 import { IUserRepository } from './../../infra/db/interfaces/user-repository'
 import { Validator } from './../protocols/validator'
 import { badRequest, serverError } from '../helpers/helpers-http'
@@ -18,6 +19,11 @@ export class SignupController implements Controller {
       const error = await this.validator.validate(req.body)
       if (error) {
         return badRequest(error)
+      }
+
+      const checkEmail = await this.repository.getByEmail(req.body.email)
+      if (checkEmail) {
+        return unprocessableEntity(new UnprocessableEntity('email is already registered'))
       }
 
       let newUser = { ...req.body, password: await this.encrypter.encrypt(req.body.password) }

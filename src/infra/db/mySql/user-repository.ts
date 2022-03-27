@@ -24,6 +24,17 @@ export class UserRepository implements IUserRepository {
     return { id, name, email }
   }
 
+  async getByEmail (email: string): Promise<UserDto> {
+    const user = await this.repositoryUser.findOne({
+      where: { email }
+    })
+    if (user) {
+      return { id: user.id, name: user.name, email: user.email }
+    } else {
+      return null
+    }
+  }
+
   async post (user: CreateUser): Promise<UserDto> {
     const { id, name, email } = await this.repositoryUser.create(user)
     return { id, name, email }

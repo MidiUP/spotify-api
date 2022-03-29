@@ -1,5 +1,5 @@
 import { IUserRepository } from './../interfaces/user-repository'
-import { CreateUser, UserDto } from '../../../domain/usecases/user'
+import { CreateUser, UserDto, UserLogin } from '../../../domain/usecases/user'
 import { sequelize } from '../../../data/sequelize'
 import User from '../../../domain/models/user'
 
@@ -30,6 +30,17 @@ export class UserRepository implements IUserRepository {
     })
     if (user) {
       return { id: user.id, name: user.name, email: user.email }
+    } else {
+      return null
+    }
+  }
+
+  async login (email: string): Promise<UserLogin> {
+    const user = await this.repositoryUser.findOne({
+      where: { email }
+    })
+    if (user) {
+      return { email: user.email, password: user.password, id: user.id }
     } else {
       return null
     }

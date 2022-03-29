@@ -1,11 +1,8 @@
 import { UnprocessableEntity } from './../errors/unprocessable-entity-error'
-import { Controller } from './../protocols/controller'
-import { Encrypter } from './../protocols/encrypter'
+import { Controller, Encrypter, Validator, HttpRequest, HttpResponse } from './../protocols'
 import { ok, unprocessableEntity } from './../helpers/helpers-http'
 import { IUserRepository } from './../../infra/db/interfaces/user-repository'
-import { Validator } from './../protocols/validator'
 import { badRequest, serverError } from '../helpers/helpers-http'
-import { HttpRequest, HttpResponse } from '../protocols/http'
 
 export class SignupController implements Controller {
   constructor (

@@ -1,8 +1,7 @@
-import { ok } from './../helpers/helpers-http'
 import { BadRequestError } from './../errors/bad-request-error'
 import { ManagerToken, Controller, Encrypter, Validator, HttpRequest, HttpResponse } from './../protocols'
 import { IUserRepository } from './../../infra/db/interfaces/user-repository'
-import { badRequest, serverError } from '../helpers/helpers-http'
+import { badRequest, serverError, ok } from '../helpers/helpers-http'
 
 export class LoginController implements Controller {
   constructor (
@@ -10,7 +9,7 @@ export class LoginController implements Controller {
     private readonly repository: IUserRepository,
     private readonly encrypter: Encrypter,
     private readonly managerToken: ManagerToken
-  ) {}
+  ) { }
 
   async handle (req: HttpRequest): Promise<HttpResponse> {
     try {

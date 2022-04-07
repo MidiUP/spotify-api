@@ -119,7 +119,7 @@ const request: HttpRequest = {
 describe('login controller', () => {
   test('shold call validate with correct param', async () => {
     const { sut, validation } = makeSut()
-    const spyValidation = jest.spyOn(validation, 'validate').mockReturnValueOnce(new Promise(resolve => resolve(new MissingParamsError('email'))))
+    const spyValidation = jest.spyOn(validation, 'validate')
     await sut.handle(request)
     expect(spyValidation).toHaveBeenCalledWith(request.body)
   })

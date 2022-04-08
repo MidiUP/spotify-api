@@ -8,9 +8,9 @@ export const configMulter = {
   storage: multer.diskStorage({
     destination: tmpFolder,
     filename (request, file, callback) {
-      const filename = file.originalname
-      request.body.filename = filename
-      return callback(null, filename)
+      const fileName = file.originalname
+      request.body.fileName = fileName
+      return callback(null, fileName)
     }
   })
 }

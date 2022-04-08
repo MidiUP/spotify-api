@@ -10,8 +10,8 @@ export class AwsUploadMusicController implements Controller {
 
   async handle (req: HttpRequest): Promise<HttpResponse> {
     try {
-      const { filename } = req.body
-      const path = await this.s3Bucket.saveFile(filename)
+      const { fileName } = req.body
+      const path = await this.s3Bucket.saveFile(fileName)
       return ok({ path: path })
     } catch (error) {
       return serverError(error)

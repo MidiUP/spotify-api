@@ -12,9 +12,9 @@ export const adapterRouter = (controller: Controller) => {
     const response = await controller.handle(request)
 
     if (response.statusCode >= 200 && response.statusCode <= 299) {
-      res.status(response.statusCode).json(response.body)
+      return res.status(response.statusCode).json(response.body)
     } else {
-      res.status(response.statusCode).json({
+      return res.status(response.statusCode).json({
         error: response.body.message
       })
     }

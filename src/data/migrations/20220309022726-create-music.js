@@ -10,6 +10,10 @@ module.exports = {
           autoIncrement: true,
           primaryKey: true
         },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
         album: {
           type: Sequelize.STRING,
           allowNull: false
@@ -21,6 +25,10 @@ module.exports = {
         thumb: {
           type: Sequelize.STRING,
           allowNull: false
+        },
+        link: {
+          type: Sequelize.STRING,
+          allowNull: true
         }
       });
 
